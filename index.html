@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>WiFi接続情報</title>
+  <title>Wi-Fi情報</title>
   <style>
     body {
       font-family: sans-serif;
@@ -15,7 +15,7 @@
       border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       max-width: 400px;
-      margin: auto;
+      margin: 1em auto;
     }
     .info {
       margin-bottom: 1em;
@@ -29,29 +29,34 @@
 </head>
 <body>
   <div class="card">
-    <h2>Wi-Fi情報</h2>
-    <div class="info"><strong>ネットワーク名1:</strong> aterm-794624-g</div>
-    <div class="info"><strong>ネットワーク名1:</strong> aterm-794624-g</div>
-    <div class="info"><strong>パスワード:</strong> <span id="pw">55e58b1144565</span></div>
-    <button onclick="copyPassword()">パスワードをコピー</button>
+    <h2>メインWi-Fi</h2>
+    <div class="info"><strong>ネットワーク名(2.4GHz):</strong> aterm-794624-a</div>
+    <div class="info"><strong>ネットワーク名(5GHz)  :</strong> aterm-794624-g</div>
+    <div class="info"><strong>パスワード:</strong> <span id="pw-main">55e58b1144565</span></div>
+    <button onclick="copyPassword('pw-main')">パスワードをコピー</button>
+  </div>
+
+  <div class="card">
+    <h2>中継器Wi-Fi</h2>
+    <div class="info"><strong>ネットワーク名(2.4GHz):</strong> Extender-A-1D74</div>
+    <div class="info"><strong>ネットワーク名(5GHz)  :</strong> Extender-G-1D74</div>
+    <div class="info"><strong>パスワード:</strong> <span id="pw-ext">vej354hbgcymr</span></div>
+    <button onclick="copyPassword('pw-ext')">パスワードをコピー</button>
   </div>
 
   <script>
-    const password = document.getElementById("pw").innerText;
-
-    function copyPassword() {
-      navigator.clipboard.writeText(password).then(() => {
+    function copyPassword(id) {
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(() => {
         alert("パスワードをコピーしました！");
       }).catch(() => {
         alert("コピーに失敗しました。手動でコピーしてください。");
       });
     }
 
-    // 自動コピー（対応ブラウザのみ）
+    // ページ読み込み時にメインWiFiパスワードを試しに自動コピー
     window.addEventListener("load", () => {
-      navigator.clipboard.writeText(password).catch(() => {
-        // 失敗しても何もしない（ユーザー操作が必要な場合など）
-      });
+      navigator.clipboard.writeText(document.getElementById("pw-main").innerText).catch(() => {});
     });
   </script>
 </body>
